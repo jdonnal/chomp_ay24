@@ -2,8 +2,9 @@ import pygame
 from settings import *
 
 
-class Fish:
+class Fish(pygame.sprite.Sprite):
     def __init__(self, x, y):
+        super().__init__()
         self.right_image = pygame.image.load("assets/images/orange_fish.png").convert()
         self.right_image.set_colorkey((0, 0, 0))
         self.left_image = pygame.transform.flip(self.right_image, True, False)
@@ -33,9 +34,10 @@ class Fish:
             self.rect.top = 0
         if self.rect.right > SCREEN_WIDTH:
             self.rect.right = SCREEN_WIDTH
-        if self.rect.bottom > SCREEN_HEIGHT - 2*TILE_SIZE: # account for sand
-            self.rect.bottom = SCREEN_HEIGHT - 2*TILE_SIZE
-
+        if self.rect.bottom > SCREEN_HEIGHT - 2 * TILE_SIZE:  # account for sand
+            self.rect.bottom = SCREEN_HEIGHT - 2 * TILE_SIZE
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+
+fish = pygame.sprite.Group()
