@@ -11,7 +11,7 @@ class Minnow:
         self.moving_left = True
         self.moving_right = False
         self.moving_up = False
-        self.moving_down = True
+        self.moving_down = False
 
     def update(self):
         if self.moving_left:
