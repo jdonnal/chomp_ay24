@@ -18,9 +18,15 @@ seagrass.set_colorkey((0, 0, 0))
 sand_top.set_colorkey((0, 0, 0))
 score = 0
 my_fish = fish.Fish(200, 200)  # create a new fish
-for _ in range(NUM_MINNOWS):
-    minnows.add(Minnow(random.randint(0, SCREEN_WIDTH - TILE_SIZE),
-                       random.randint(0, WATER_BOTTOM - TILE_SIZE)))
+my_minnow = Minnow(50, 50)
+my_minnow.moving_up = False
+my_minnow.moving_down = False
+my_minnow.moving_left = False
+my_minnow.moving_right = False
+minnows.add(my_minnow)
+#for _ in range(NUM_MINNOWS):
+#    minnows.add(Minnow(random.randint(0, SCREEN_WIDTH - TILE_SIZE),
+#                       random.randint(0, WATER_BOTTOM - TILE_SIZE)))
 
 background = screen.copy()
 clock = pygame.time.Clock()
@@ -47,7 +53,7 @@ def draw_background():
 
 draw_background()
 
-while len(minnows)>0:
+while len(minnows) > 0:
     # listen for events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -71,6 +77,8 @@ while len(minnows)>0:
                 my_fish.moving_up = False
             if event.key == pygame.K_DOWN:
                 my_fish.moving_down = False
+        elif event.type == pygame.MOUSEMOTION:
+            my_minnow.rect.center = pygame.mouse.get_pos()
 
     # update game objects
     my_fish.update()
@@ -79,7 +87,7 @@ while len(minnows)>0:
     # check for collisions
     chomped_minnows = pygame.sprite.spritecollide(my_fish, minnows, True)
     score += len(chomped_minnows)
-    if len(chomped_minnows) >0:
+    if len(chomped_minnows) > 0:
         print(f"Chomped a minnow, your score is {score}!")
     # draw the game screen
     screen.blit(background, (0, 0))
